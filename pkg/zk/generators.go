@@ -31,7 +31,7 @@ const (
 )
 
 func headlessDomain(z *v1beta1.ZookeeperCluster) string {
-	return fmt.Sprintf("%s.%s.svc.cluster.local", headlessSvcName(z), z.GetNamespace())
+	return fmt.Sprintf("%s.%s.svc.cloudos", headlessSvcName(z), z.GetNamespace())
 }
 
 func headlessSvcName(z *v1beta1.ZookeeperCluster) string {
@@ -92,15 +92,15 @@ func makeZkPodSpec(z *v1beta1.ZookeeperCluster) v1.PodSpec {
 		Ports:           z.Spec.Ports,
 		ImagePullPolicy: z.Spec.Image.PullPolicy,
 		ReadinessProbe: &v1.Probe{
-			InitialDelaySeconds: 10,
-			TimeoutSeconds:      10,
+			InitialDelaySeconds: 300,
+			TimeoutSeconds:      30,
 			Handler: v1.Handler{
 				Exec: &v1.ExecAction{Command: []string{"zookeeperReady.sh"}},
 			},
 		},
 		LivenessProbe: &v1.Probe{
-			InitialDelaySeconds: 10,
-			TimeoutSeconds:      10,
+			InitialDelaySeconds: 180,
+			TimeoutSeconds:      30,
 			Handler: v1.Handler{
 				Exec: &v1.ExecAction{Command: []string{"zookeeperLive.sh"}},
 			},

@@ -6,8 +6,6 @@ build/_test
 # Intellij
 .idea
 
-# Vendored depdendencies
-vendor/*
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
